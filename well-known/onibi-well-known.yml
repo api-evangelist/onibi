@@ -1,0 +1,114 @@
+generated: '2026-08-17'
+method: probed
+source: live GET of /.well-known/* and contract-discovery paths on every Onibi-controlled host
+result: none
+note: >-
+  No .well-known document is served on any Onibi host. This file records an absence, not a presence,
+  so NO `WellKnown` or `SecurityTxt` pointer is wired into apis.yml. Two distinct failure shapes were
+  observed. (1) onibi.gg / www.onibi.gg is a static marketing site behind a catch-all that answers
+  HTTP 200 with the studio homepage — the identical 43,500-byte `<!DOCTYPE html>` body — for EVERY
+  path requested, including /robots.txt, /llms.txt, /sitemap.xml and every /.well-known/* path. Those
+  200s are soft-404s, not documents, and are recorded here as misses. (2) www.tomoendlessblue.com
+  (the Tomo: Endless Blue product site) returns real HTTP 404s for every /.well-known/* path, and
+  does serve a genuine /robots.txt and /sitemap.xml. api.onibi.gg does not resolve (NXDOMAIN).
+hosts:
+- host: https://www.onibi.gg
+  behavior: soft-200 catch-all — every path returns the homepage HTML (43500 bytes, text/html)
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    document: false
+    note: HTML homepage shell, not an RFC 9116 document — counted as a miss
+  - path: /.well-known/openid-configuration
+    status: 200
+    document: false
+    note: HTML homepage shell, not JSON
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    document: false
+    note: HTML homepage shell, not JSON
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    document: false
+    note: HTML homepage shell, not JSON
+  - path: /.well-known/api-catalog
+    status: 200
+    document: false
+    note: HTML homepage shell, not an RFC 9727 catalog
+  - path: /.well-known/ai-plugin.json
+    status: 200
+    document: false
+    note: HTML homepage shell, not JSON
+  - path: /.well-known/agent-card.json
+    status: 200
+    document: false
+    note: HTML homepage shell — rejected per the A2A false-positive rule; no agent card exists
+  - path: /.well-known/agent.json
+    status: 200
+    document: false
+    note: HTML homepage shell — legacy A2A path, also a soft-404
+  - path: /robots.txt
+    status: 200
+    document: false
+    note: returns HTML, so the site publishes no robots.txt
+  - path: /llms.txt
+    status: 200
+    document: false
+    note: returns HTML, so the site publishes no llms.txt
+  - path: /sitemap.xml
+    status: 200
+    document: false
+    note: returns HTML, so the site publishes no sitemap
+- host: https://www.tomoendlessblue.com
+  behavior: real 404s — a correctly configured static site
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+    document: false
+  - path: /.well-known/openid-configuration
+    status: 404
+    document: false
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    document: false
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    document: false
+  - path: /.well-known/api-catalog
+    status: 404
+    document: false
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    document: false
+  - path: /.well-known/agent-card.json
+    status: 404
+    document: false
+  - path: /.well-known/agent.json
+    status: 404
+    document: false
+  - path: /llms.txt
+    status: 404
+    document: false
+  - path: /robots.txt
+    status: 200
+    document: true
+    note: >-
+      real text/plain robots.txt (147 bytes). Disallows /assets/ui/hero/new/, /assets/ui/hero/mini/
+      and /api/ — the /api/ disallow is the only evidence of any HTTP API behind the product site,
+      and it is a robots-excluded first-party game/web backend, not a published developer API. It was
+      NOT probed: the pipeline honors robots.txt.
+  - path: /sitemap.xml
+    status: 200
+    document: true
+    note: >-
+      real application/xml sitemap (2017 bytes) listing 27 URLs — the marketing homepage, privacy
+      policy and terms of service in 9 languages. No developer, docs or API pages.
+- host: https://api.onibi.gg
+  behavior: NXDOMAIN — host does not resolve
+  documents: []
+x-evidence:
+  fetched: '2026-08-17'
+  paths_probed: 22
+  hosts_probed: 5
+  documents_found: 2
+  api_documents_found: 0

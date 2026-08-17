@@ -1,0 +1,33 @@
+generated: '2026-08-17'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.onibi.gg
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov  6 20:15:46 2026 GMT
+  hsts: false
+- host: www.tomoendlessblue.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Nov  6 18:54:14 2026 GMT
+  hsts: false
+domains:
+- domain: onibi.gg
+  dnssec: true
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject
+- domain: tomoendlessblue.com
+  dnssec: true
+  caa: []
+  spf: false
+  dmarc: false
+  dmarc_policy: null
+x-note: >-
+  www.tomoendlessblue.com (the product site for Tomo: Endless Blue) was probed by hand with the same
+  DNS/TLS/HTTP checks and appended, because probe-domain-security.py only reads Website/Portal/
+  humanURL/baseURL hosts from apis.yml and the Tomo site is carried as a Product pointer. Neither
+  host sends HSTS; neither domain publishes a CAA record; tomoendlessblue.com publishes no SPF or
+  DMARC record (onibi.gg publishes both, DMARC p=reject). Absence of a record is observed data.

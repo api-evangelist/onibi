@@ -1,0 +1,26 @@
+generated: '2026-08-17'
+method: probed
+source: registry searches on npm, PyPI and GitHub, plus the studio site
+result: none
+packages: []
+package_count: 0
+note: >-
+  Onibi publishes no client libraries. Searched npm, PyPI and GitHub on 2026-08-17: no GitHub
+  organization exists under onibi, onibi-studio, onibigg, onibi-games or tomoendlessblue (all 404 on
+  api.github.com/orgs/<name>), pypi.org/pypi/onibi/json returns 404, and the studio site links no
+  source repositories or SDKs. No `Packages` or `SDKs` pointer is wired into apis.yml — this file
+  records an absence.
+x-name-collision-warning: >-
+  DO NOT attribute the npm `@onibi/*` scope to this company. npm search returns four packages under
+  it — @onibi/errors, @onibi/errorhandler, @onibi/sanitize, @onibi/database — described as
+  express.js error/validation/database middleware. registry.npmjs.org/@onibi/errors names a single
+  maintainer, matthijsr <matthijsreyers@gmail.com>, with no homepage or repository field and a last
+  publish of 2023-12-02 (v2.0.1). That is an unrelated individual's utility scope, not the Bordeaux/
+  San Francisco game studio, which ships no JavaScript SDK of any kind.
+x-evidence:
+- {source: 'https://api.github.com/orgs/onibi', status: 404}
+- {source: 'https://api.github.com/orgs/onibi-studio', status: 404}
+- {source: 'https://api.github.com/orgs/onibigg', status: 404}
+- {source: 'https://api.github.com/orgs/tomoendlessblue', status: 404}
+- {source: 'https://pypi.org/pypi/onibi/json', status: 404}
+- {source: 'https://registry.npmjs.org/@onibi/errors', status: 200, attribution: third-party}
