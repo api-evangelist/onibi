@@ -10,6 +10,17 @@ description: 'Onibi (Onibi inc.) is a video game studio founded in 2023 by Benja
   intent to keep the game moddable, but no modding API, tooling or documentation has been published
   yet, so there is nothing machine-readable to catalog.'
 url: https://raw.githubusercontent.com/api-evangelist/onibi/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: false
+  label: Hosted service · you call their endpoint
+  confidence: medium
+  source:
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://onibi.gg/unfurl/onibi_studio.png
 x-type: company
 x-source: serena-portfolio
